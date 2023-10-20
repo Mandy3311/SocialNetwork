@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    {% load static %}
+		<link href="{% static 'socialnetwork/base.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'socialnetwork/post.js' %}?v={% now 'U' %}" type="text/javascript"></script>
+		<title> {% block title %} Login {% endblock %} </title>
+	</head>
+
+	<body>
+        <div class="header-div" id="id_header_div">
+            <div class="user-info">
+                {% block user-info %}
+                {% endblock %}
+            </div>
+
+            <div class="site-name" id="id_site_name">
+                Blog Master
+            </div>
+
+            <div class="navigation-links">
+                {% block navigation-links %}
+                {% endblock %}
+            </div>
+        </div>
+
+        <div class="page-name">
+            {% block page-name %}
+            {% endblock %}
+        </div>
+
+	    <div class="content">
+		    {% block content %}
+		    {% endblock %}
+		</div>
+
+        <div class="follow">
+            {% block follow %}
+		    {% endblock %}
+        </div>
+	</body>
+</html>

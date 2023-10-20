@@ -1,0 +1,44 @@
+{% extends "socialnetwork/base.html" %}
+{% block title %} Profile {% endblock %}
+
+{% block user-info %}
+  <a id="id_nav_profile" href="{% url 'profile' %}">{{user.first_name}} {{user.last_name}}</a>
+{% endblock %}
+
+{% block navigation-links %}
+  <a id="id_nav_global_stream" href="{% url 'global_stream' %}">Global</a>
+  <a id="id_nav_follower_stream" href="{% url 'follower_stream' %}">Follower</a>
+  <a id="id_nav_logout" href="{% url 'logout' %}">Logout</a>
+{% endblock %}
+
+{% block page-name %}
+  <p class="page_name" id="id_page_name">Profile Page for {{request.user.first_name}} {{request.user.last_name}}</p>
+{% endblock %}
+
+{% block content %}
+    {% if not request.user.profile.picture %}
+        <img id="id_user_picture" src="/static/Wonwoo.jpg" width="300" height="300" />
+    {% else %}
+        <img id="id_user_picture" src="{% url 'photo' request.user.id %}" width="300" height="300" />
+    {% endif %}
+    <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
+      <table>
+        {{form}}
+      </table>
+      {% csrf_token %}
+      <button id="id_update_profile_button">Submit</button>
+    </form>
+{% endblock %}
+
+{% block follow %}
+    <p>You are following:</p>
+    <ul class="following-list">
+      {% for u in request.user.profile.following.all %}
+        <li>
+          <a href="{% url 'other_profile' u.id %}" id="id_profile_link_{{u}}">
+          {{u.first_name}} {{u.last_name}}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+{% endblock %}

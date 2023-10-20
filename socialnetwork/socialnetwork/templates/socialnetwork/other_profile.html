@@ -1,0 +1,35 @@
+{% extends "socialnetwork/base.html" %}
+{% block title %} Other Profile {% endblock %}
+
+{% block user-info %}
+  <a id="id_nav_profile" href="{% url 'profile' %}">{{request.user.first_name}} {{request.user.last_name}}</a>
+{% endblock %}
+
+{% block navigation-links %}
+  <a id="id_nav_global_stream" href="{% url 'global_stream' %}">Global</a>
+  <a id="id_nav_follower_stream" href="{% url 'follower_stream' %}">Follower</a>
+  <a id="id_nav_logout" href="{% url 'logout' %}">Logout</a>
+{% endblock %}
+
+{% block page-name %}
+  <p class="page_name" id="id_page_name">{{profile.user.first_name}} {{profile.user.last_name}} Profile</p>
+{% endblock %}
+
+{% block content %}
+    {% if not profile.picture %}
+        <img id="id_user_picture" src="/static/Junhui.jpg" width="300" height="300" />
+    {% else %}
+        <img id="id_user_picture" src="{% url 'photo' profile.user.id %}" width="300" height="300" />
+    {% endif %}
+
+    <div class="bio-input-text" id="id_user_bio">{{profile.bio}}</div>
+    {% if profile.user in request.user.profile.following.all %}
+      <form action="{% url 'unfollow' profile.user.id %}" method="POST">
+        <button id="id_unfollow" type="submit">Unfollow</button>{% csrf_token %}
+      </form>
+    {% else %}
+      <form action="{% url 'follow' profile.user.id %}" method="POST">
+        <button id="id_follow" type="submit">Follow</button>{% csrf_token %}
+      </form>
+    {% endif %}
+{% endblock %}

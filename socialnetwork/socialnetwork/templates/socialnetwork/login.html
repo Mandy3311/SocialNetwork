@@ -1,0 +1,33 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block navigation-links %}
+<div>
+  <a id="id_register_link" href="{% url 'register' %}">Register</a>
+</div>
+{% endblock %}
+
+{% block page-name %}
+  <label class="page_name" id="id_page_name">Login</label>
+{% endblock %}
+
+{% block content %}
+  <form class="login_form" action="{% url 'login' %}" method="POST">
+    <div>
+      <label for="id_username">Username:</label>
+      <input id="id_username" type="text" name="username" autofocus />
+    </div>
+    <div>
+      <label for="id_password">Password:</label>
+      <input id="id_password" type="text" name="password" autofocus />
+    </div>
+    <button id="id_login_button" type="submit">Submit</button>
+    {%csrf_token%}
+  </form>
+
+  {% for error in form.non_field_errors %}
+  <p class="errorlist">
+      {{ error }}
+  </p>
+{% endfor %}
+
+{% endblock %}

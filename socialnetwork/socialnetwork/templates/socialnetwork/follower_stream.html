@@ -1,0 +1,34 @@
+{% extends "socialnetwork/base.html" %}
+{% block title %} Follower Stream {% endblock %}
+
+{% block user-info %}
+  <a id="id_nav_profile" href="{% url 'profile' %}">{{user.first_name}} {{user.last_name}}</a>
+{% endblock %}
+
+{% block navigation-links %}
+  <a id="id_nav_global_stream" href="{% url 'global_stream' %}">Global</a>
+  <a id="id_nav_follower_stream" href="{% url 'follower_stream' %}">Follower</a>
+  <a id="id_nav_logout" href="{% url 'logout' %}">Logout</a>
+{% endblock %}
+
+{% block page-name %}
+  <div class="page_name" id="id_page_name">Follower Stream</div>
+{% endblock %}
+
+{% block content %}
+
+  <div id="all-posts"></div>
+  <script>
+    const addItemURL = "{% url 'add-comment' %}"
+    const profileURL = function (id) {
+      return "{% url 'other_profile' 0 %}".replace("0",id)
+    }
+    window.onload = function() {
+      getList('follower');
+    }
+    setInterval(function() {
+      getList('follower');
+    }, 5000);
+  </script>
+
+{% endblock %}
